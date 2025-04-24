@@ -446,7 +446,7 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	} else if s.opts.mma {
 		encoder = newMmaEncoder(buffer, s.attachments)
 	} else {
-		encoder = xml.NewEncoder(buffer)
+		encoder = NewEncoder(buffer)
 	}
 
 	if err := encoder.Encode(envelope); err != nil {
@@ -526,7 +526,7 @@ func (s *Client) call(ctx context.Context, soapAction string, request, response 
 	}
 
 	var mmaBoundary string
-	if s.opts.mma{
+	if s.opts.mma {
 		mmaBoundary, err = getMmaHeader(res.Header.Get("Content-Type"))
 		if err != nil {
 			return err
